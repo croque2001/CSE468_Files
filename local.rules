@@ -5,6 +5,7 @@
 # This file intentionally does not come with signatures.  Put your local
 # additions here.
 
+#Cristian Roque: These are the rules for detecting attacks (LAND, TCP SYN, SMURF, and UDP)
 #LAND ATTACK
 alert tcp $HOME_NET 80 <> $HOME_NET 80 (msg: "LAND ATTACK DETECTED"; flags: S; sid:10000009;rev: 3;)
 #SYN FLOOD ATTACK
@@ -14,7 +15,7 @@ alert icmp $HOME_NET any -> 192.168.0.255 any (msg:"SMURF ATTACK DETECTED"; sid:
 #UDP FLOOD ATTACK
 alert udp any any -> $HOME_NET 53 (msg:"UDP FLOOD ATTACK DETECTED"; sid:10002; rev:2;)
 
-#PORT SCANNING
+#Cristian Roque: These are the rules for detecting scanning (ACK, FIN, NULL, XMAS, and UDP)
 #TCP ACK SCAN
 alert tcp $EXTERNAL_NET 5050 -> $HOME_NET 80 (msg:"ACK SCAN IN EFFECT"; flags:A; sid:10000007; rev:2;)
 #FIN SCAN
