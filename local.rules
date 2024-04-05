@@ -1,0 +1,27 @@
+# $Id: local.rules,v 2.11 2004/07/23 20:15:44 bmc Exp $
+# ----------------
+# LOCAL RULES
+# ----------------
+# This file intentionally does not come with signatures.  Put your local
+# additions here.
+
+#LAND ATTACK
+alert tcp $HOME_NET 80 <> $HOME_NET 80 (msg: "LAND ATTACK DETECTED"; flags: S; sid:10000009;rev: 3;)
+#SYN FLOOD ATTACK
+alert tcp !$HOME_NET any -> $HOME_NET 80 (msg: "SYN FLOOD ATTACK DETECTED"; flags: S; sid: 10001; rev: 1;)
+#SMURF FLOOD ATTACK
+alert icmp $HOME_NET any -> 192.168.0.255 any (msg:"SMURF ATTACK DETECTED"; sid: 100000023; rev: 1;)
+#UDP FLOOD ATTACK
+alert udp any any -> $HOME_NET 53 (msg:"UDP FLOOD ATTACK DETECTED"; sid:10002; rev:2;)
+
+#PORT SCANNING
+#TCP ACK SCAN
+alert tcp $EXTERNAL_NET 5050 -> $HOME_NET 80 (msg:"ACK SCAN IN EFFECT"; flags:A; sid:10000007; rev:2;)
+#FIN SCAN
+alert tcp $EXTERNAL_NET 5050 -> $HOME_NET 80 (msg:"FIN SCAN DETECTED"; flags:F; classtype:attempted-recon; sid:10000001; rev:1;)
+#NULL SCAN
+alert tcp $EXTERNAL_NET any -> $HOME_NET 80 (msg:"WE HAVE A NULL SCAN"; flags:0; sid:1000009; rev:1;)
+#XMAS SCAN
+alert tcp $EXTERNAL_NET 5050 -> $HOME_NET 80 (msg:"XMAS SCAN DETECTED"; flags:UPF; classtype:attempted-recon; sid:10000002; rev:1;)
+#UDP SCAN
+alert udp $EXTERNAL_NET any -> $HOME_NET 53 (msg:"UDP SCAN DETECTED"; classtype:attempted-recon; sid:10000006; rev:1;)
