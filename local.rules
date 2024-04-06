@@ -13,7 +13,7 @@ alert tcp !$HOME_NET any -> $HOME_NET 80 (msg: "SYN FLOOD ATTACK DETECTED"; flag
 #SMURF FLOOD ATTACK
 alert icmp $HOME_NET any -> 192.168.0.255 any (msg:"SMURF ATTACK DETECTED"; sid: 100000023; rev: 1;)
 #UDP FLOOD ATTACK
-alert udp any any -> $HOME_NET 53 (msg:"UDP FLOOD ATTACK DETECTED"; sid:10002; rev:2;)
+alert udp any any -> $HOME_NET 53 (msg:"UDP FLOOD ATTACK DETECTED"; sid:10000008; rev:2;)
 
 #Cristian Roque: These are the rules for detecting scanning (ACK, FIN, NULL, XMAS, and UDP)
 #TCP ACK SCAN
@@ -25,4 +25,4 @@ alert tcp $EXTERNAL_NET any -> $HOME_NET 80 (msg:"WE HAVE A NULL SCAN"; flags:0;
 #XMAS SCAN
 alert tcp $EXTERNAL_NET 5050 -> $HOME_NET 80 (msg:"XMAS SCAN DETECTED"; flags:UPF; classtype:attempted-recon; sid:10000002; rev:1;)
 #UDP SCAN
-alert udp $EXTERNAL_NET any -> $HOME_NET 53 (msg:"UDP SCAN DETECTED"; classtype:attempted-recon; sid:10000006; rev:1;)
+alert udp $EXTERNAL_NET any -> $HOME_NET 80 (msg:"UDP SCAN DETECTED"; classtype:attempted-recon; sid:10000006; rev:1;)
